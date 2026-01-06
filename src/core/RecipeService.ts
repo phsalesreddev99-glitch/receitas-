@@ -215,4 +215,41 @@ async create(input: CreateRecipeInput): Promise<Recipe> {
     procura.status = "archived"
     return procura
   }
+
+  //Novo metodo lista de compra
+  async listaCompra(ids: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> {
+
+    let lista: { ingredientId: string; quantity: number; unit: string }[] = []
+
+    for (const id of ids) {
+      const existe = store.recipes.find(itens => itens.id == id)
+
+      if (!existe) {
+        throw new Error('ID not found')
+      }
+      ///Verificação status
+      if (existe.status !== "published") {
+        throw new Error(`Recipe ${id} is not published`)
+      }
+      ///
+      for (const ingrediente of existe.ingredients) {
+        let encontrado = false
+        for (const item of lista) {
+          if (ingrediente.ingredientId == item.ingredientId && ingrediente.unit == item.unit) {
+            encontrado = true
+            item.quantity = item.quantity + ingrediente.quantity
+          }
+        }
+        if (encontrado == false) {
+          lista.push({
+            ingredientId: ingrediente.ingredientId,
+            quantity: ingrediente.quantity,
+            unit: ingrediente.unit
+          })
+        }
+      }
+    }
+    return lista
+  }//
+
 }
