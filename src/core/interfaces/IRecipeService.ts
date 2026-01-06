@@ -1,4 +1,3 @@
-import { promises } from "node:dns";
 import { Recipe, CreateRecipeInput } from "../models.js"
 
 export interface IRecipeService {
@@ -9,4 +8,5 @@ export interface IRecipeService {
   delete(id: string): Promise<void>
   archivar(id:string): Promise<Recipe>///Necessario pra emplementação status
   publicar(id:string): Promise<Recipe>///Necessario pra emplementação status
+   listaCompra(id: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]>//Sengunda emplementação 2
 }

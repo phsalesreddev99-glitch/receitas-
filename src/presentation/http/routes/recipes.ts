@@ -4,7 +4,7 @@ import { IRecipeService } from "../../../core/interfaces/IRecipeService.js"
 export function recipesRoutes(service: IRecipeService) {
   const router = Router()
 
-     ///endpoint nova de public/status
+  ///endpoint nova de public/status
   router.patch("/:id/public", async (req, res, next) => {
     try {
       const item = await service.publicar(req.params.id)
@@ -23,7 +23,7 @@ export function recipesRoutes(service: IRecipeService) {
       next(error)
     }
   })
-///
+  ///
   router.get("/", async (req, res, next) => {
     try {
       const items = await service.list({
@@ -48,21 +48,26 @@ export function recipesRoutes(service: IRecipeService) {
 
   router.post("/", async (req, res, next) => {
     try {
-      const item = await service.create({
-        title: String(req.body.title ?? ""),
-        description: req.body.description,
-        ingredients: Array.isArray(req.body.ingredients)
-          ? req.body.ingredients.map((i: any) => ({
+      if (Array.isArray(req.body.recipeIds)) {///Lista de compras. Reaproveitando endpoint
+        const items = await service.listaCompra(req.body.recipeIds)
+        res.status(201).json(items)
+      } else {
+        const item = await service.create({
+          title: String(req.body.title ?? ""),
+          description: req.body.description,
+          ingredients: Array.isArray(req.body.ingredients)
+            ? req.body.ingredients.map((i: any) => ({
               name: String(i?.name ?? ""),
               quantity: Number(i?.quantity ?? 0),
               unit: String(i?.unit ?? ""),
             }))
-          : [],
-        steps: Array.isArray(req.body.steps) ? req.body.steps.map(String) : [],
-        servings: Number(req.body.servings ?? 0),
-        categoryId: String(req.body.categoryId ?? ""),
-      })
-      res.status(201).json(item)
+            : [],
+          steps: Array.isArray(req.body.steps) ? req.body.steps.map(String) : [],
+          servings: Number(req.body.servings ?? 0),
+          categoryId: String(req.body.categoryId ?? ""),
+        })
+        res.status(201).json(item)
+      }
     } catch (error) {
       next(error)
     }
