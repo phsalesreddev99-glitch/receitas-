@@ -4,6 +4,17 @@ import { IRecipeService } from "../../../core/interfaces/IRecipeService.js"
 export function recipesRoutes(service: IRecipeService) {
   const router = Router()
 
+  ///endpoint nova do escalonamento 
+  router.post("/:id/scale", async (req, res, next) => {
+    try {
+      const servings = Number(req.body.servings)
+      const items = await service.escalonamento(req.params.id, servings)
+      res.json(items)
+    } catch (error) {
+      next(error)
+    }
+  })
+  ///
   ///endpoint nova de public/status
   router.patch("/:id/public", async (req, res, next) => {
     try {
