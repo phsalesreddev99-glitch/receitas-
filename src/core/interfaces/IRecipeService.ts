@@ -6,8 +6,8 @@ export interface IRecipeService {
   create(input: CreateRecipeInput): Promise<Recipe>
   update(id: string, data: Partial<CreateRecipeInput>): Promise<Recipe>
   delete(id: string): Promise<void>
-  archivar(id: string): Promise<Recipe>///Necessario pra emplementação status
-  publicar(id: string): Promise<Recipe>///Necessario pra emplementação status
-  listaCompra(id: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]>//Sengunda emplementação 2
-  escalonamento(id: string, servings: number): Promise<Recipe> //Primeira emplementação 1
+  archive(id: string): Promise<Recipe> /* Metodo arquivar receita Necessario pra emplementação status */
+  publish(id: string): Promise<Recipe> /* Metodo publicar receita Nessario pra emplementação status */
+  shoppingList(id: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> 
+  scaleRecipes(id: string, servings: number): Promise<Recipe> /* Metodo Geração de Lista de compras Consolidada (como resposta da requisição)*/
 }

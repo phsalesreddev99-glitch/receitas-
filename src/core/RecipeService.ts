@@ -41,18 +41,18 @@ export class RecipeService implements IRecipeService {
         })
       })
     }
-    let f = items.filter(c => c.status == 'published')
-    return f
+    /* Filtra apenas receitas publicas */
+    let fReceita = items.filter(receitas => receitas.status == 'published');
+    return fReceita;
   }
 
   async get(id: string): Promise<Recipe> {
     const found = store.recipes.find(r => r.id === id)
     if (!found) throw new Error("Recipe not found")
-    ///Verificação status
+   /* Verificação status da receitas apenas publicas */
     if (found.status !== "published") {
-      throw new Error("Only published recipes can be accessed")
+      throw new Error("Only published recipes can be accessed");
     }
-    ///
     return found
   }
 
@@ -60,11 +60,11 @@ export class RecipeService implements IRecipeService {
     const title = input.title.trim()
     if (!title) throw new Error("Title is required")
 
-    // Validate Category
+    /* Validate Category */
     const category = await this.categoryService.get(input.categoryId).catch(() => null)
     if (!category) throw new Error("Category does not exist")
 
-    // Process Ingredients
+    /* Process Ingredients */
     const incoming = Array.isArray(input.ingredients)
       ? input.ingredients.map((i) => ({
         name: String(i.name ?? "").trim(),
@@ -102,7 +102,7 @@ export class RecipeService implements IRecipeService {
       servings,
       categoryId: input.categoryId,
       createdAt: new Date(),
-      status: 'draft'///Propriedade status
+      status: 'draft'/* Propriedade status começa com rascunho */
     }
 
     store.recipes.push(recipe)
@@ -115,11 +115,11 @@ export class RecipeService implements IRecipeService {
 
     const current = store.recipes[idx]
 
-    ///Verificação status
+    /* Verificação status receitas so pode editar receitas draft */
     if (current.status !== "draft") {
-      throw new Error("Only draft recipes can be edited")
+      throw new Error("Only draft recipes can be edited");
     }
-    ///
+    
 
     const updated = { ...current }
 
@@ -181,15 +181,15 @@ export class RecipeService implements IRecipeService {
     const idx = store.recipes.findIndex(r => r.id === id)
     const copia = store.recipes[idx]
     if (idx < 0) throw new Error("ID does not exist")
-    ///Verificação status
+  
+    /* Verificação status receitas so podem deletar receitas em racunho */
     if (copia.status !== "draft") {
       throw new Error('You can only delete draft recipes')
     }
-    ///
     store.recipes.splice(idx, 1)
   }
-  /// Metodo public
-  async publicar(id: string): Promise<Recipe> {
+ /* Metodo publicar receitas */
+  async publish(id: string): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id)
 
     if (!procura) {
@@ -202,8 +202,8 @@ export class RecipeService implements IRecipeService {
     return procura
   }
 
-  ///Metodo archive
-  async archivar(id: string): Promise<Recipe> {
+/* Metodo publicar receitas */
+  async archive(id: string): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id)
 
     if (!procura) {
@@ -216,17 +216,16 @@ export class RecipeService implements IRecipeService {
     return procura
   }
 
-  ///novo metodo de escalonamento
-  async escalonamento(id: string, servings: number): Promise<Recipe> {
+ /* novo metodo de escalonamento */
+  async scaleRecipes(id: string, servings: number): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id)
     if (!procura) {
       throw new Error("Recipe not found")
     }
-    ///Verificação status
+    /* Verificação status so pode escalonar receitas publicas */
     if (procura.status !== "published") {
-      throw new Error("You can only scale published recipes")
+      throw new Error("You can only scale published recipes");
     }
-    ///
     if (servings <= 0) {
       throw new Error("portions must be greater than zero")
     } else {
@@ -253,10 +252,9 @@ export class RecipeService implements IRecipeService {
       }
       return receitaEscalonada
     }
-  }//
-
-  //Novo metodo lista de compra
-  async listaCompra(ids: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> {
+  }
+ /* Novo metodo lista de compra */
+  async shoppingList(ids: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> {
 
     let lista: { ingredientId: string; quantity: number; unit: string }[] = []
 
@@ -266,11 +264,10 @@ export class RecipeService implements IRecipeService {
       if (!existe) {
         throw new Error('ID not found')
       }
-      ///Verificação status
+      /* Verificação status e publica se for diferente lança o erro */ 
       if (existe.status !== "published") {
-        throw new Error(`Recipe ${id} is not published`)
+        throw new Error(`Recipe ${id} is not published`);
       }
-      ///
       for (const ingrediente of existe.ingredients) {
         let encontrado = false
         for (const item of lista) {

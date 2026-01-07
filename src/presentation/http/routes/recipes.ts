@@ -4,31 +4,30 @@ import { IRecipeService } from "../../../core/interfaces/IRecipeService.js"
 export function recipesRoutes(service: IRecipeService) {
   const router = Router()
 
-  ///endpoint nova do escalonamento 
+/* endpoint nova do escalonamento */
   router.post("/:id/scale", async (req, res, next) => {
     try {
       const servings = Number(req.body.servings)
-      const items = await service.escalonamento(req.params.id, servings)
+      const items = await service.scaleRecipes(req.params.id, servings)
       res.json(items)
     } catch (error) {
       next(error)
     }
   })
-  ///
-  ///endpoint nova de public/status
-  router.patch("/:id/public", async (req, res, next) => {
+
+/* endpoint nova pra publicar receita */
+  router.patch("/:id/publish", async (req, res, next) => {
     try {
-      const item = await service.publicar(req.params.id)
+      const item = await service.publish(req.params.id)
       res.json(item)
     } catch (error) {
       next(error)
     }
   })
-  ///
-  ///endpoint nova de archive/status
+  /* endpoint nova pra arquivar receita */
   router.patch("/:id/archived", async (req, res, next) => {
     try {
-      const item = await service.archivar(req.params.id)
+      const item = await service.archive(req.params.id)
       res.json(item)
     } catch (error) {
       next(error)
@@ -59,8 +58,8 @@ export function recipesRoutes(service: IRecipeService) {
 
   router.post("/", async (req, res, next) => {
     try {
-      if (Array.isArray(req.body.recipeIds)) {///Lista de compras. Reaproveitando endpoint
-        const items = await service.listaCompra(req.body.recipeIds)
+      if (Array.isArray(req.body.recipeIds)) {/* Lista de compras. Reaproveitando endpoint ja com create recipes*/
+        const items = await service.shoppingList(req.body.recipeIds)
         res.status(201).json(items)
       } else {
         const item = await service.create({
