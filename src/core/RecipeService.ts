@@ -22,7 +22,7 @@ export class RecipeService implements IRecipeService {
     }
 
     let items = [...store.recipes]
-    
+
     if (categoryId) {
       items = items.filter(r => r.categoryId === categoryId)
     }
@@ -31,7 +31,7 @@ export class RecipeService implements IRecipeService {
       const searchQuery = filter.search.trim().toLowerCase()
       const allIngredients = await this.ingredientService.list()
       const nameById = new Map(allIngredients.map((ing) => [ing.id, ing.name.toLowerCase()]))
-      
+
       items = items.filter((recipe) => {
         if (recipe.title.toLowerCase().includes(searchQuery)) return true
         if (recipe.description && recipe.description.toLowerCase().includes(searchQuery)) return true
@@ -45,7 +45,7 @@ export class RecipeService implements IRecipeService {
     return f
   }
 
-   async get(id: string): Promise<Recipe> {
+  async get(id: string): Promise<Recipe> {
     const found = store.recipes.find(r => r.id === id)
     if (!found) throw new Error("Recipe not found")
     ///Verificação status
@@ -56,7 +56,7 @@ export class RecipeService implements IRecipeService {
     return found
   }
 
-async create(input: CreateRecipeInput): Promise<Recipe> {
+  async create(input: CreateRecipeInput): Promise<Recipe> {
     const title = input.title.trim()
     if (!title) throw new Error("Title is required")
 
@@ -115,7 +115,7 @@ async create(input: CreateRecipeInput): Promise<Recipe> {
 
     const current = store.recipes[idx]
 
-     ///Verificação status
+    ///Verificação status
     if (current.status !== "draft") {
       throw new Error("Only draft recipes can be edited")
     }
@@ -188,7 +188,7 @@ async create(input: CreateRecipeInput): Promise<Recipe> {
     ///
     store.recipes.splice(idx, 1)
   }
-   /// Metodo public
+  /// Metodo public
   async publicar(id: string): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id)
 
@@ -215,6 +215,45 @@ async create(input: CreateRecipeInput): Promise<Recipe> {
     procura.status = "archived"
     return procura
   }
+
+  ///novo metodo de escalonamento
+  async escalonamento(id: string, servings: number): Promise<Recipe> {
+    let procura = store.recipes.find((c) => c.id == id)
+    if (!procura) {
+      throw new Error("Recipe not found")
+    }
+    ///Verificação status
+    if (procura.status !== "published") {
+      throw new Error("You can only scale published recipes")
+    }
+    ///
+    if (servings <= 0) {
+      throw new Error("portions must be greater than zero")
+    } else {
+
+      let novo: { ingredientId: string; quantity: number; unit: string }[] = []
+
+      let clonar = [...procura.ingredients]
+
+      let fator = servings / procura.servings
+
+      clonar.forEach((c) => {
+        let novoR = {
+          ingredientId: c.ingredientId,
+          quantity: c.quantity * fator,
+          unit: c.unit
+        }
+        novo.push(novoR);
+      })
+
+      let receitaEscalonada: Recipe = {
+        ...procura,
+        ingredients: novo,
+        servings: servings
+      }
+      return receitaEscalonada
+    }
+  }//
 
   //Novo metodo lista de compra
   async listaCompra(ids: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> {
@@ -251,5 +290,4 @@ async create(input: CreateRecipeInput): Promise<Recipe> {
     }
     return lista
   }//
-
 }
