@@ -33,7 +33,7 @@ export function recipesRoutes(service: IRecipeService) {
       next(error)
     }
   })
-  ///
+  
   router.get("/", async (req, res, next) => {
     try {
       const items = await service.list({
