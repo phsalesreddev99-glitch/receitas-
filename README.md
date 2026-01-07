@@ -132,13 +132,12 @@ Códigos de erro: as validações retornam `400` com `{ error: "mensagem" }` (mi
       }
  - Publicar receita
     - Método: `PATCH`  
-    - URL: `/recipes/:id/public`
-
+    - URL: `/recipes/:id/publish`
       ```
 - Listagens e filtros:
   - `GET /categories`, `GET /ingredients`, `GET /recipes` — somente published
   - `GET /recipes?categoryId=<ID>` para filtrar por categoria somente published
-  - `GET /recipes?search=<texto>` para buscar por título/descrição/ingredientes somente published
+  - `GET /recipes?search=<texto>` para  buscar por título/descrição/ingredientes somente published
 - Dicas de uso:
   - Crie um ambiente com variável `base_url` e use `{{ base_url }}` nas requisições.
   - Salve exemplos de corpo usando os arquivos em `requests/`.
@@ -316,12 +315,11 @@ O sistema implementa um fluxo de estados para as receitas, composto por:
 > - Receitas `archived` não podem ser alteradas, escalonadas ou deletadas.
 
 ### Endpoints Relacionados
-- `PATCH /recipes/:id/public` — Publicar receitas (apenas draft)  
+- `PATCH /recipes/:id/publish` — Publicar receitas (apenas draft)  
 - `PATCH /recipes/:id/archived` — Arquivar receitas (apenas published)  
 - `POST /recipes/:id/scale` — Escalonar receita (apenas published)  
 
 ### Exemplos de Erro
-
 ```json
 // Tentativa de deletar uma receita publicada
 {
