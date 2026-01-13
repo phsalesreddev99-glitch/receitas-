@@ -135,9 +135,14 @@ Códigos de erro: as validações retornam `400` com `{ error: "mensagem" }` (mi
     - URL: `/recipes/:id/publish`
       ```
 - Listagens e filtros:
-  - `GET /categories`, `GET /ingredients`, `GET /recipes` — somente published
-  - `GET /recipes?categoryId=<ID>` para filtrar por categoria somente published
-  - `GET /recipes?search=<texto>` para  buscar por título/descrição/ingredientes somente published
+ - `GET /recipes` — lista apenas receitas publicadas
+ - `GET /recipes?categoryId=<ID>` — lista receitas publicadas por categoria (via ID)
+ - `GET /recipes?categoryName=<nome>` — lista receitas publicadas por categoria (via nome)
+ - `GET /recipes?search=<texto>` — busca receitas publicadas por:
+  - título
+  - descrição
+  - nome dos ingredientes
+  
 - Dicas de uso:
   - Crie um ambiente com variável `base_url` e use `{{ base_url }}` nas requisições.
   - Salve exemplos de corpo usando os arquivos em `requests/`.

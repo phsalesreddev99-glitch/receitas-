@@ -49,7 +49,7 @@ export class RecipeService implements IRecipeService {
   async get(id: string): Promise<Recipe> {
     const found = store.recipes.find(r => r.id === id)
     if (!found) throw new Error("Recipe not found")
-   /* Verificação status da receitas apenas publicas */
+    /* Verificação status da receitas apenas publicas */
     if (found.status !== "published") {
       throw new Error("Only published recipes can be accessed");
     }
@@ -119,7 +119,7 @@ export class RecipeService implements IRecipeService {
     if (current.status !== "draft") {
       throw new Error("Only draft recipes can be edited");
     }
-    
+
 
     const updated = { ...current }
 
@@ -181,60 +181,60 @@ export class RecipeService implements IRecipeService {
     const idx = store.recipes.findIndex(r => r.id === id)
     const copia = store.recipes[idx]
     if (idx < 0) throw new Error("ID does not exist")
-  
+
     /* Verificação status receitas so podem deletar receitas em racunho */
     if (copia.status !== "draft") {
-      throw new Error('You can only delete draft recipes')
+      throw new Error('You can only delete draft recipes');
     }
     store.recipes.splice(idx, 1)
   }
- /* Metodo publicar receitas */
+  /* Metodo publicar receitas */
   async publish(id: string): Promise<Recipe> {
-    let procura = store.recipes.find((c) => c.id == id)
+    let procura = store.recipes.find((c) => c.id == id);
 
     if (!procura) {
-      throw new Error("Recipe not found")
+      throw new Error("Recipe not found");
     }
     if (procura.status !== "draft") {
-      throw new Error("You can only publish draft recipes")
+      throw new Error("You can only publish draft recipes");
     }
-    procura.status = "published"
-    return procura
+    procura.status = "published";
+    return procura;
   }
 
-/* Metodo publicar receitas */
+  /* Metodo publicar receitas */
   async archive(id: string): Promise<Recipe> {
-    let procura = store.recipes.find((c) => c.id == id)
+    let procura = store.recipes.find((c) => c.id == id);
 
     if (!procura) {
-      throw new Error("Recipe not found")
+      throw new Error("Recipe not found");
     }
     if (procura.status !== "published") {
-      throw new Error("You can only archive published recipes")
+      throw new Error("You can only archive published recipes");
     }
-    procura.status = "archived"
-    return procura
+    procura.status = "archived";
+    return procura;
   }
 
- /* novo metodo de escalonamento */
+  /* novo metodo de escalonamento */
   async scaleRecipes(id: string, servings: number): Promise<Recipe> {
-    let procura = store.recipes.find((c) => c.id == id)
+    let procura = store.recipes.find((c) => c.id == id);
     if (!procura) {
-      throw new Error("Recipe not found")
+      throw new Error("Recipe not found");
     }
     /* Verificação status so pode escalonar receitas publicas */
     if (procura.status !== "published") {
       throw new Error("You can only scale published recipes");
     }
     if (servings <= 0) {
-      throw new Error("portions must be greater than zero")
+      throw new Error("portions must be greater than zero");
     } else {
 
-      let novo: { ingredientId: string; quantity: number; unit: string }[] = []
+      let novo: { ingredientId: string; quantity: number; unit: string }[] = [];
 
-      let clonar = [...procura.ingredients]
+      let clonar = [...procura.ingredients];
 
-      let fator = servings / procura.servings
+      let fator = servings / procura.servings;
 
       clonar.forEach((c) => {
         let novoR = {
@@ -250,41 +250,51 @@ export class RecipeService implements IRecipeService {
         ingredients: novo,
         servings: servings
       }
-      return receitaEscalonada
+      return receitaEscalonada;
     }
   }
- /* Novo metodo lista de compra */
-  async shoppingList(ids: string[]): Promise<{ ingredientId: string; quantity: number; unit: string }[]> {
+  /* Novo metodo lista de compra */
+  async shoppingList(ids: string[]): Promise<{ ingredientId: string; name: string; quantity: number; unit: string }[]> {
 
-    let lista: { ingredientId: string; quantity: number; unit: string }[] = []
+    if (!Array.isArray(ids) || ids.length === 0) {
+      throw new Error("Recipe IDs are required");
+    }
+
+    const lista: { ingredientId: string; name: string; quantity: number; unit: string }[] = [];
+
+    const allIngredients = await this.ingredientService.list();
 
     for (const id of ids) {
-      const existe = store.recipes.find(itens => itens.id == id)
+      const recipe = store.recipes.find(r => r.id === id);
+      if (!recipe) throw new Error(`Recipe with id '${id}' not found`);
+      if (recipe.status !== "published") throw new Error(`Recipe ${id} is not published`);
 
-      if (!existe) {
-        throw new Error('ID not found')
-      }
-      /* Verificação status e publica se for diferente lança o erro */ 
-      if (existe.status !== "published") {
-        throw new Error(`Recipe ${id} is not published`);
-      }
-      for (const ingrediente of existe.ingredients) {
-        let encontrado = false
+      for (const ingrediente of recipe.ingredients) {
+        const found = allIngredients.find(i => i.id === ingrediente.ingredientId);
+        if (!found) throw new Error(`Ingredient with id '${ingrediente.ingredientId}' not found`);
+
+        const name = found.name;
+        let encontrado = false;
+
         for (const item of lista) {
-          if (ingrediente.ingredientId == item.ingredientId && ingrediente.unit == item.unit) {
-            encontrado = true
-            item.quantity = item.quantity + ingrediente.quantity
+          if (item.ingredientId === ingrediente.ingredientId && item.unit === ingrediente.unit) {
+            item.quantity += ingrediente.quantity;
+            encontrado = true;
+            break;
           }
         }
-        if (encontrado == false) {
+
+        if (!encontrado) {
           lista.push({
             ingredientId: ingrediente.ingredientId,
+            name,
             quantity: ingrediente.quantity,
             unit: ingrediente.unit
           })
         }
       }
     }
-    return lista
+
+    return lista;
   }
 }
