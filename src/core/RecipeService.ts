@@ -20,9 +20,10 @@ export class RecipeService implements IRecipeService {
         return []
       }
     }
+       /* Filtra status da receitas apenas publicas */
+    let items = store.recipes.filter(r => r.status === "published")
 
-    let items = [...store.recipes]
-
+    
     if (categoryId) {
       items = items.filter(r => r.categoryId === categoryId)
     }
@@ -41,9 +42,8 @@ export class RecipeService implements IRecipeService {
         })
       })
     }
-    /* Filtra apenas receitas publicas */
-    let fReceita = items.filter(receitas => receitas.status == 'published');
-    return fReceita;
+   
+   return items;
   }
 
   async get(id: string): Promise<Recipe> {
@@ -228,7 +228,7 @@ export class RecipeService implements IRecipeService {
     }
     if (servings <= 0) {
       throw new Error("portions must be greater than zero");
-    } else {
+    }
 
       let novo: { ingredientId: string; quantity: number; unit: string }[] = [];
 
@@ -251,7 +251,6 @@ export class RecipeService implements IRecipeService {
         servings: servings
       }
       return receitaEscalonada;
-    }
   }
   /* Novo metodo lista de compra */
   async shoppingList(ids: string[]): Promise<{ ingredientId: string; name: string; quantity: number; unit: string }[]> {
