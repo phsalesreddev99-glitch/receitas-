@@ -55,12 +55,12 @@ export class IngredientService implements IIngredientService {
   }
 
   async delete(id: string): Promise<void> {
-    // Verifica se algum receita ainda usa o ingrediente
+    /* Verifica se algum receita ainda usa o ingrediente */
     const usedInRecipe = store.recipes.some(r =>
       r.ingredients.some(i => i.ingredientId === id)
     )
 
-    if (usedInRecipe) {/* Novo codigo so apaga ingrediente se nao tiver usando por nenhuma receita*/
+    if (usedInRecipe) {/* Novo codigo so apaga ingrediente se nao tiver sendo usando por nenhuma receita*/
       throw new Error("Cannot delete ingredient because it is used in one or more recipes")
     }
 
