@@ -182,13 +182,13 @@ export class RecipeService implements IRecipeService {
     const copia = store.recipes[idx]
     if (idx < 0) throw new Error("ID does not exist")
 
-    /* Verificação status receitas so podem deletar receitas em racunho */
+    /* Verificação status receitas so podem deletar receitas em rascunho */
     if (copia.status !== "draft") {
       throw new Error('You can only delete draft recipes');
     }
     store.recipes.splice(idx, 1)
   }
-  /* Metodo publicar receitas */
+  /* Metodo publicar receitas (dratf -> publish) */
   async publish(id: string): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id);
 
@@ -202,7 +202,7 @@ export class RecipeService implements IRecipeService {
     return procura;
   }
 
-  /* Metodo publicar receitas */
+  /* Metodo arquivar receitas publicas (publish -> archive) */
   async archive(id: string): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id);
 
@@ -216,7 +216,7 @@ export class RecipeService implements IRecipeService {
     return procura;
   }
 
-  /* novo metodo de escalonamento */
+  /* Novo metodo de escalonamento */
   async scaleRecipes(id: string, servings: number): Promise<Recipe> {
     let procura = store.recipes.find((c) => c.id == id);
     if (!procura) {
