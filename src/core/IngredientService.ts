@@ -15,7 +15,8 @@ export class IngredientService implements IIngredientService {
   }
 
   async findByName(name: string): Promise<Ingredient | undefined> {
-    return store.ingredients.find((i) => i.name === name)
+    const normalized = name.trim().toLowerCase()/*Novo codigo*/
+    return store.ingredients.find((i) => i.name.toLocaleLowerCase() === normalized)
   }
 
   async create(data: { name: string }): Promise<Ingredient> {
@@ -54,7 +55,16 @@ export class IngredientService implements IIngredientService {
   }
 
   async delete(id: string): Promise<void> {
-    const idx = store.ingredients.findIndex((i) => i.id === id)
+    // Verifica se algum receita ainda usa o ingrediente
+    const usedInRecipe = store.recipes.some(r =>
+      r.ingredients.some(i => i.ingredientId === id)
+    )
+
+    if (usedInRecipe) {/* Novo codigo so apaga ingrediente se nao tiver usando por nenhuma receita*/
+      throw new Error("Cannot delete ingredient because it is used in one or more recipes")
+    }
+
+    const idx = store.ingredients.findIndex(i => i.id === id)
     if (idx >= 0) {
       store.ingredients.splice(idx, 1)
     }

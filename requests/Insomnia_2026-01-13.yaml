@@ -2,15 +2,15 @@ type: collection.insomnia.rest/5.0
 schema_version: "5.1"
 name: Recipes
 meta:
-  id: wrk_bc921139b8e84ad9b98fa566bdbd7cd4
-  created: 1767804725820
-  modified: 1767804725820
+  id: wrk_1fab8107544d4b39b9c6c01d80edb836
+  created: 1768338619960
+  modified: 1768338619960
   description: ""
 collection:
   - url: "{{baseUrl}}/categories"
     name: List Categories
     meta:
-      id: req_21bdc73f56a44d0b8efd89f406ab5d13
+      id: req_daefa24d948544f8ab608bd3294e105f
       created: 1765412665489
       modified: 1765984087256
       isPrivate: false
@@ -31,18 +31,21 @@ collection:
         store: true
       rebuildPath: true
   - url: "{{baseUrl}}/categories"
-    name: Create Category
+    name: Create Category [ Massas ]
     meta:
-      id: req_93cb398e171c41bca66adbd5fba6c7d7
+      id: req_920e320480614da2b067c68571907c15
       created: 1765412821874
-      modified: 1765983441575
+      modified: 1768340372148
       isPrivate: false
       description: ""
       sortKey: -1765697582879
     method: POST
     body:
       mimeType: application/json
-      text: '{ "name": "Massas" }'
+      text: |-
+        {
+        	"name": "Massas" 
+        }
     headers:
       - name: Content-Type
         value: application/json
@@ -61,7 +64,7 @@ collection:
   - url: "{{baseUrl}}/categories/1de3de75-1f03-419e-ad86-d803d296ea17"
     name: Show Category
     meta:
-      id: req_6fc748763f8d4a5da1365ba0037905cd
+      id: req_215562f2f7044d779e472dfb356cb6d4
       created: 1765414569582
       modified: 1765984098022
       isPrivate: false
@@ -84,7 +87,7 @@ collection:
   - url: "{{baseUrl}}/recipes"
     name: List Recipes
     meta:
-      id: req_b217ba122bce46a780472a2b512d380c
+      id: req_2a671e1faf6447ecb0e763ae141b9125
       created: 1765414773717
       modified: 1767737605206
       isPrivate: false
@@ -107,9 +110,9 @@ collection:
   - url: "{{baseUrl}}/ingredients"
     name: List Ingredients
     meta:
-      id: req_c8fc9b866727443ba999210a52c4dd7c
+      id: req_6277273c563342e5bf28148e36d4fcc2
       created: 1765414831438
-      modified: 1765984109514
+      modified: 1768348077777
       isPrivate: false
       description: ""
       sortKey: -1764801829879.9375
@@ -130,9 +133,9 @@ collection:
   - url: "{{baseUrl}}/ingredients"
     name: Create Ingredient
     meta:
-      id: req_f7262666cd9f45cb82e18a76d3257ee4
+      id: req_4e69db3821aa4524a25bc7e3f5058d1e
       created: 1765980252169
-      modified: 1765982776294
+      modified: 1768347284418
       isPrivate: false
       description: ""
       sortKey: -1765107247684.4688
@@ -156,45 +159,72 @@ collection:
         store: true
       rebuildPath: true
   - url: "{{baseUrl}}/recipes"
-    name: Create Recipe [ bolo de cenoura ]
+    name: Create Recipe [ Sopa de carne ]
     meta:
-      id: req_0d2a7b164dbb45528a508f589980aff0
+      id: req_a53f2205841140bfa093303c79ff3bf6
       created: 1765980403434
-      modified: 1767737433985
+      modified: 1768347367826
       isPrivate: false
       description: ""
       sortKey: -1759304309398.375
     method: POST
     body:
       mimeType: application/json
-      text: |-
+      text: >
         {
-          "title": "Bolo de Cenoura",
-          "description": "Bolo fofinho com cobertura de chocolate",
-          "categoryId": "d6553818-525d-4ef9-82ca-b5b9132960d2",
+          "title": "Sopa de Carne",
+          "description": "Sopa nutritiva de carne com legumes",
+          "categoryId": "33db935a-246a-4a5d-a591-b6cb4ece545f",
           "ingredients": [
             {
-              "name": "Cenoura",
-              "quantity": 3,
-              "unit": "unidades"
+              "name": "Carne bovina em cubos",
+              "quantity": 500,
+              "unit": "gramas"
             },
             {
-              "name": "Farinha de Trigo",
+              "name": "Batata",
               "quantity": 2,
-              "unit": "xícaras"
+              "unit": "unidades"
             },
             {
-              "name": "Ovo",
-              "quantity": 3,
+              "name": "Cenoura",
+              "quantity": 2,
               "unit": "unidades"
+            },
+            {
+              "name": "Cebola",
+              "quantity": 1,
+              "unit": "unidade"
+            },
+            {
+              "name": "Alho",
+              "quantity": 2,
+              "unit": "dentes"
+            },
+            {
+              "name": "Água",
+              "quantity": 1.5,
+              "unit": "litros"
+            },
+            {
+              "name": "Sal",
+              "quantity": 1,
+              "unit": "colher de chá"
+            },
+            {
+              "name": "Pimenta-do-reino",
+              "quantity": 0.5,
+              "unit": "colher de chá"
             }
           ],
           "steps": [
-            "Bata as cenouras, os ovos e o óleo no liquidificador.",
-            "Misture com a farinha e o açúcar.",
-            "Asse por 40 minutos."
+            "Refogue a cebola e o alho em uma panela grande.",
+            "Adicione a carne em cubos e doure por todos os lados.",
+            "Acrescente a água, batata e cenoura cortadas em cubos.",
+            "Tempere com sal e pimenta.",
+            "Cozinhe em fogo médio por 40 minutos ou até a carne e os legumes estarem macios."
           ],
-          "servings": 8
+          "servings": 4
         }
     headers:
       - name: Content-Type
@@ -214,7 +244,7 @@ collection:
   - url: "{{baseUrl}}/recipes/5fd063f2-97bc-4451-86e2-aa4a3a50326a"
     name: Show Recipe
     meta:
-      id: req_66747b2bb4254db593299ce17a858295
+      id: req_6f5aab0a7bd9439788934b267773a46b
       created: 1765980696089
       modified: 1765987699104
       isPrivate: false
@@ -234,12 +264,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{baseUrl}}/recipes/d4d92387-68e3-45ad-b4a8-3a82be4d614b"
+  - url: "{{baseUrl}}/recipes/d026dbd9-d248-441e-b17a-390c04489361"
     name: Update Recipe
     meta:
-      id: req_f4c84c460db14012ac70d9334ce6003f
+      id: req_9d4ce2d75d104f5298d379a09c69963c
       created: 1765980898367
-      modified: 1767737572667
+      modified: 1768340035819
       isPrivate: false
       description: ""
       sortKey: -1758693473789.3125
@@ -248,7 +278,7 @@ collection:
       mimeType: application/json
       text: |-
         {
-          "title": "oi"
+        	"title" : "miojo"
         }
     headers:
       - name: Content-Type
@@ -268,9 +298,9 @@ collection:
   - url: "{{baseUrl}}/recipes?categoryName=Sobremesas"
     name: List Recipes [CategoryName]
     meta:
-      id: req_75f1216543a44e7eacdd85c7c6575542
+      id: req_084031b43f0d4b219fae1bf4169e89ab
       created: 1765981937371
-      modified: 1765984136222
+      modified: 1768339994431
       isPrivate: false
       description: ""
       sortKey: -1763580158661.8125
@@ -291,7 +321,7 @@ collection:
   - url: "{{baseUrl}}/recipes"
     name: Create Recipe [mousse de maracujá ]
     meta:
-      id: req_82f74f66638b4c1294faa7e0485d1071
+      id: req_caa54c6611bd450db9e6805c9b34f701
       created: 1765982127963
       modified: 1765988045706
       isPrivate: false
@@ -347,9 +377,9 @@ collection:
   - url: "{{baseUrl}}/recipes"
     name: Create Recipe [ Pudim de Leite Condensado ]
     meta:
-      id: req_be2ecfc0a7184d10aa11e014f9795824
+      id: req_ee7e4632f6b74206888cdd5e397f78b9
       created: 1765982289024
-      modified: 1765988097222
+      modified: 1768347775344
       isPrivate: false
       description: ""
       sortKey: -1759151600496.1094
@@ -360,7 +390,7 @@ collection:
         {
           "title": "Pudim de Leite Condensado",
           "description": "Clássico pudim cremoso com calda de caramelo",
-          "categoryId": "534a09f8-6fc9-4dd6-a1c8-cabf31b4dd7a",
+          "categoryId": "e34e6005-00c8-4ace-a6fc-d6bdbd534cd4",
           "ingredients": [
             {
               "name": "Leite Condensado",
@@ -407,12 +437,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{baseUrl}}/recipes/d8eff5e8-c99c-4184-a2b6-8b408452dbba"
+  - url: "{{baseUrl}}/recipes/d026dbd9-d248-441e-b17a-390c04489361"
     name: Delete Recipe
     meta:
-      id: req_2a531ee9e5f441e99a5ca096deb7a507
+      id: req_fc7eeec6ca3942d8bdc27d2a29cbb4fb
       created: 1765982500269
-      modified: 1767804824497
+      modified: 1768340299860
       isPrivate: false
       description: ""
       sortKey: -1758693473689.3125
@@ -433,9 +463,9 @@ collection:
   - url: "{{baseUrl}}/recipes"
     name: Create Recipe [ Espaguete à Bolonhesa ]
     meta:
-      id: req_d69523230ee741b6ac5e356025620562
+      id: req_1085855ae8c54844bf0951283ffe2575
       created: 1765983575907
-      modified: 1767804775545
+      modified: 1768340007951
       isPrivate: false
       description: ""
       sortKey: -1759227954947.2422
@@ -446,7 +476,7 @@ collection:
         {
           "title": "Espaguete à Bolonhesa",
           "description": "Um clássico italiano prático e delicioso",
-          "categoryId": "f89c21b7-62f8-4e55-91a1-dcabeb815fbb",
+          "categoryId": "1abb750a-d01b-4a19-8f21-75212cdd44ae",
           "ingredients": [
             {
               "name": "Espaguete",
@@ -498,12 +528,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{baseUrl}}/recipes//archived"
+  - url: "{{baseUrl}}/recipes/d026dbd9-d248-441e-b17a-390c04489361/archived"
     name: " Archive Recipe"
     meta:
-      id: req_70de0301e59a4dca93e691fd6df1a7a0
+      id: req_4f894a63127a46cf8988d8f446ea83a9
       created: 1767737272712
-      modified: 1767805004136
+      modified: 1768340308536
       isPrivate: false
       description: ""
       sortKey: -1767737272712
@@ -521,12 +551,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{baseUrl}}/recipes/d8eff5e8-c99c-4184-a2b6-8b408452dbba/publish"
+  - url: "{{baseUrl}}/recipes/0ab5e2ba-782e-4e3c-8b41-d7df7c3ce033/publish"
     name: Publish Recipe
     meta:
-      id: req_6aa15822135846b98d7bd808cddee835
+      id: req_b9705d86e84a42fcb30a185b6a7ad914
       created: 1767737305112
-      modified: 1767804981511
+      modified: 1768347825798
       isPrivate: false
       description: ""
       sortKey: -1767737305112
@@ -547,9 +577,9 @@ collection:
   - url: "{{baseUrl}}/recipes"
     name: " shoppingList"
     meta:
-      id: req_e50000ac1f66418ab85d04f0b1fb4496
+      id: req_b4e825452c5540a3ac4cea754771f5bd
       created: 1767737341173
-      modified: 1767804957501
+      modified: 1768347835957
       isPrivate: false
       description: ""
       sortKey: -1767737341173
@@ -558,7 +588,7 @@ collection:
       mimeType: application/json
       text: >-
         {
-        	"recipeIds":["d4d92387-68e3-45ad-b4a8-3a82be4d614b","811d53d3-41a3-4bb5-8177-282d6f6d4401"]
+        	"recipeIds":["ee2a5920-a84f-4552-a3fe-57175d16f43a","06852143-5234-4ff1-a5b8-3cef557b383f","0ab5e2ba-782e-4e3c-8b41-d7df7c3ce033"]
         }
     headers:
       - name: Content-Type
@@ -575,12 +605,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{baseUrl}}/recipes//scale"
+  - url: "{{baseUrl}}/recipes/06852143-5234-4ff1-a5b8-3cef557b383f/scale"
     name: ScaleRecipes
     meta:
-      id: req_9ed900ae151e4d3ebb9cd072749807d2
+      id: req_6cac887c7be145ad8d04e753ebe04baf
       created: 1767753295892
-      modified: 1767753418370
+      modified: 1768348314325
       isPrivate: false
       description: ""
       sortKey: -1767753295892
@@ -589,13 +619,301 @@ collection:
       mimeType: application/json
       text: |-
         {
-          "servings": 4
+          "servings": 10
         }
     headers:
       - name: Content-Type
         value: application/json
       - name: User-Agent
         value: insomnia/12.2.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories/1abb750a-d01b-4a19-8f21-75212cdd44ae"
+    name: Update Category
+    meta:
+      id: req_dbc19f1ee24d433192d6f04ee3641975
+      created: 1768339478976
+      modified: 1768339718621
+      isPrivate: false
+      description: ""
+      sortKey: -1758693473739.3125
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "Massas grandes"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/ingredients/cb84b55c-6c66-4dfd-b7c4-898cfe3c784b"
+    name: Update Ingredient
+    meta:
+      id: req_3c5696281a9c4d3eb31adacc0d453f9e
+      created: 1768339555129
+      modified: 1768339671541
+      isPrivate: false
+      description: ""
+      sortKey: -1758693473714.3125
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "Tomate grande"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories/1abb750a-d01b-4a19-8f21-75212cdd44ae"
+    name: Delete Category
+    meta:
+      id: req_313941501cfe421e96d167505aec4091
+      created: 1768340088102
+      modified: 1768340262609
+      isPrivate: false
+      description: ""
+      sortKey: -1758693473639.3125
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/ingredients/d40ea86d-5eb1-40c2-8dba-f1e535861691"
+    name: Delete Ingredient
+    meta:
+      id: req_62829af1a86d47df83b109dad858d71f
+      created: 1768340126017
+      modified: 1768347472311
+      isPrivate: false
+      description: ""
+      sortKey: -1758693473589.3125
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories"
+    name: Create Category [ Sopas ]
+    meta:
+      id: req_21b385c54869432fbe032c197e92a8ef
+      created: 1768340343029
+      modified: 1768340727625
+      isPrivate: false
+      description: ""
+      sortKey: -1765555124184
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Sopas" 
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories"
+    name: Create Category [ Sobremesas ]
+    meta:
+      id: req_e64c39cbd07d4a68b66ffcfaeba0558e
+      created: 1768340348304
+      modified: 1768340698284
+      isPrivate: false
+      description: ""
+      sortKey: -1765626353531.5
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Sobremesas" 
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories"
+    name: Create Category [ Saladas ]
+    meta:
+      id: req_d188f374c05e46d393686678532fe7aa
+      created: 1768340409746
+      modified: 1768340444733
+      isPrivate: false
+      description: ""
+      sortKey: -1765590738857.75
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Saladas" 
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/recipes"
+    name: Create Recipe [ bolo de cenoura ]
+    meta:
+      id: req_25f070eb25a2401b91af7d66d2e3d50c
+      created: 1768340499044
+      modified: 1768347667165
+      isPrivate: false
+      description: ""
+      sortKey: -1759266132172.8086
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "title": "Bolo de Cenoura",
+          "description": "Bolo fofinho com cobertura de chocolate",
+          "categoryId": "e34e6005-00c8-4ace-a6fc-d6bdbd534cd4",
+          "ingredients": [
+            {
+              "name": "Cenoura",
+              "quantity": 3,
+              "unit": "unidades"
+            },
+            {
+              "name": "Farinha de Trigo",
+              "quantity": 2,
+              "unit": "xícaras"
+            },
+            {
+              "name": "Ovo",
+              "quantity": 3,
+              "unit": "unidades"
+            }
+          ],
+          "steps": [
+            "Bata as cenouras, os ovos e o óleo no liquidificador.",
+            "Misture com a farinha e o açúcar.",
+            "Asse por 40 minutos."
+          ],
+          "servings": 8
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{baseUrl}}/categories"
+    name: Create Category
+    meta:
+      id: req_d4f80f855ed04dc197f50edabeebfda2
+      created: 1768340707217
+      modified: 1768340747237
+      isPrivate: false
+      description: ""
+      sortKey: -1765483894836.5
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Carnes" 
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.1.0
         description: ""
         disabled: false
     settings:
@@ -609,13 +927,13 @@ collection:
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_926cfb22b1b74eabb5c11c06570ba863
+    id: jar_99d4a9698ec540608661202a5dff0fee
     created: 1765412665351
     modified: 1765412665351
 environments:
   name: Base Environment
   meta:
-    id: env_04271aa73ea1409ca8cec483d1c7b6da
+    id: env_7c5be20eaa3945b9be4d40dc107a6179
     created: 1765412665334
     modified: 1765413196355
     isPrivate: false
